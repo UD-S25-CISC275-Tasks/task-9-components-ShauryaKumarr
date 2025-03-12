@@ -1,56 +1,28 @@
-import React, { useState } from "react";
-import { Button } from "react-bootstrap";
+import { useState } from "react";
 
-function ShoveBoxButton({
-    position,
-    setPosition,
-}: {
-    position: number;
-    setPosition: (newPosition: number) => void;
-}) {
-    return (
-        <Button
-            onClick={() => {
-                setPosition(4 + position);
-            }}
-        >
-            Shove the Box
-        </Button>
-    );
-}
+export function ShoveBox() {
+    const [margin, setMargin] = useState(10);
 
-function MoveableBox(): React.JSX.Element {
-    const [position, setPosition] = useState<number>(10);
-    return (
-        <div
-            data-testid="moveable-box"
-            style={{
-                width: "50px",
-                height: "50px",
-                backgroundColor: "lightblue",
-                border: "1px solid blue",
-                display: "inline-block",
-                verticalAlign: "bottom",
-                marginLeft: position + "px",
-            }}
-        ></div>
-    );
-}
-
-export function ShoveBox(): React.JSX.Element {
-    const box = MoveableBox();
+    function shove() {
+        setMargin(margin + 4);
+    }
 
     return (
         <div>
-            <h3>Shove Box</h3>
-            {/* <span>The box is at: {box.position}</span>
+            <h2>Shove Box</h2>
             <div>
-                <ShoveBoxButton
-                    position={box.position}
-                    setPosition={box.setPosition}
-                ></ShoveBoxButton>
-                {box}
-            </div> */}
+                <button onClick={shove}>Shove</button>
+                <div
+                    data-testid="moveable-box"
+                    style={{
+                        marginLeft: `${margin}px`,
+                        display: "inline-block",
+                        width: "50px",
+                        height: "50px",
+                        backgroundColor: "blue",
+                    }}
+                ></div>
+            </div>
         </div>
     );
 }

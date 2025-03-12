@@ -1,55 +1,50 @@
-import React, { useState } from "react";
-import { Button, Row, Col } from "react-bootstrap";
+import { useState } from "react";
 
-const PEOPLE = [
-    "Alan Turing",
-    "Grace Hopper",
-    "Ada Lovelace",
-    "Charles Babbage",
-    "Barbara Liskov",
-    "Margaret Hamilton",
-];
-
-export function ChooseTeam(): React.JSX.Element {
-    const [allOptions, setAllOptions] = useState<string[]>(PEOPLE);
+export function ChooseTeam() {
+    const people = ["Alice", "Bob", "Charlie", "Dave", "Eve", "Frank", "Grace"];
     const [team, setTeam] = useState<string[]>([]);
 
-    function chooseMember() {
-        /*
-        if (!team.includes(newMember)) {
-            team.push(newMember);
+    const addToTeam = (person: string) => {
+        if (!team.includes(person)) {
+            setTeam([...team, person]);
         }
-        */
-    }
+    };
 
-    function clearTeam() {
-        /*
-        team = [];
-        */
-    }
+    const clearTeam = () => {
+        setTeam([]);
+    };
 
     return (
         <div>
-            <h3>Choose Team</h3>
-            <Row>
-                <Col>
-                    {allOptions.map((option: string) => (
-                        <div key={option} style={{ marginBottom: "4px" }}>
-                            Add{" "}
-                            <Button onClick={chooseMember} size="sm">
-                                {option}
-                            </Button>
-                        </div>
-                    ))}
-                </Col>
-                <Col>
-                    <strong>Team:</strong>
-                    {team.map((member: string) => (
-                        <li key={member}>{member}</li>
-                    ))}
-                    <Button onClick={clearTeam}>Clear Team</Button>
-                </Col>
-            </Row>
+            <h2>Choose Team</h2>
+            <div style={{ display: "flex" }}>
+                <div>
+                    <h3>People</h3>
+                    <div>
+                        {people
+                            .filter((person) => !team.includes(person))
+                            .map((person) => (
+                                <button
+                                    key={person}
+                                    onClick={() => addToTeam(person)}
+                                >
+                                    {person}
+                                </button>
+                            ))}
+                        {team.length > 0 && (
+                            <button onClick={clearTeam}>Clear Team</button>
+                        )}
+                    </div>
+                </div>
+                <div style={{ marginLeft: "2rem" }}>
+                    <h3>Team</h3>
+                    <ul>
+                        {team.map((person) => (
+                            <li key={person}>{person}</li>
+                        ))}
+                    </ul>
+                </div>
+            </div>
         </div>
     );
 }

@@ -1,46 +1,28 @@
-import React, { useState } from "react";
-import { Button } from "react-bootstrap";
+import { useState } from "react";
 
-export const COLORS = ["red", "blue", "green"];
-const DEFAULT_COLOR_INDEX = 0;
+export function ColoredBox() {
+    const colors = ["red", "green", "blue", "yellow", "purple"];
+    const [colorIndex, setColorIndex] = useState(0);
 
-function ChangeColor(): React.JSX.Element {
-    const [colorIndex, setColorIndex] = useState<number>(DEFAULT_COLOR_INDEX);
-    return (
-        <Button
-            onClick={() => {
-                setColorIndex((1 + colorIndex) % COLORS.length);
-            }}
-        >
-            Next Color
-        </Button>
-    );
-}
+    function cycleColor() {
+        setColorIndex((prev) => (prev + 1) % colors.length);
+    }
 
-function ColorPreview(): React.JSX.Element {
-    return (
-        <div
-            data-testid="colored-box"
-            style={{
-                width: "50px",
-                height: "50px",
-                backgroundColor: COLORS[DEFAULT_COLOR_INDEX],
-                display: "inline-block",
-                verticalAlign: "bottom",
-                marginLeft: "5px",
-            }}
-        ></div>
-    );
-}
-
-export function ColoredBox(): React.JSX.Element {
     return (
         <div>
-            <h3>Colored Box</h3>
-            <span>The current color is: {COLORS[DEFAULT_COLOR_INDEX]}</span>
+            <h2>Colored Box</h2>
             <div>
-                <ChangeColor></ChangeColor>
-                <ColorPreview></ColorPreview>
+                <button onClick={cycleColor}>Cycle Color</button>
+                <div
+                    data-testid="colored-box"
+                    style={{
+                        marginLeft: "1rem",
+                        display: "inline-block",
+                        width: "50px",
+                        height: "50px",
+                        backgroundColor: colors[colorIndex],
+                    }}
+                ></div>
             </div>
         </div>
     );
